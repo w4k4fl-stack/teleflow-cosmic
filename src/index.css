@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: #02030a;
+  color: #e0f2fe;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Custom scrollbar - hide it for immersive scroll */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Cosmic accents */
+@layer utilities {
+  .text-glow-cyan {
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+  }
+  .text-glow-violet {
+    text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+  }
+  .box-glow {
+    box-shadow: 0 0 40px rgba(46, 91, 255, 0.15);
+  }
+}
+
+/* Smooth section transitions */
+.core-section {
+  will-change: transform, opacity;
+}
+
+/* Selection */
+::selection {
+  background: rgba(34, 211, 238, 0.3);
+  color: #fff;
+}

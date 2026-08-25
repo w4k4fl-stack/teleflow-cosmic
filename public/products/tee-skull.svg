@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#0D0D0D"/>
+  <path d="M75 55 L125 55 L145 75 L145 140 L55 140 L55 75 Z" fill="#1a1a1a" stroke="#39FF14" stroke-width="3"/>
+  <circle cx="90" cy="95" r="8" fill="#39FF14"/>
+  <circle cx="110" cy="95" r="8" fill="#39FF14"/>
+  <path d="M95 115 L105 115 L100 125 Z" fill="#FF0055"/>
+  <text x="100" y="160" text-anchor="middle" fill="#39FF14" font-family="monospace" font-size="12">DECENT</text>
+</svg>

@@ -105,9 +105,9 @@ async function main() {
   const parsedFps = parseFps(fps);
   console.log(`Approach FPS: ${parsedFps.toFixed(2)}, Duration: ${duration.toFixed(2)}s`);
 
-  const targetFps = Math.min(parsedFps, 30);
+  const targetFps = Math.min(parsedFps, 15);
   run(
-    `ffmpeg -i "${approachPath}" -vf "fps=${targetFps},scale=1280:-1:flags=lanczos" -q:v 2 "${path.join(FRAMES_DIR, 'frame_%04d.jpg')}"`
+    `ffmpeg -i "${approachPath}" -vf "fps=${targetFps},scale=640:-1:flags=lanczos" -q:v 6 "${path.join(FRAMES_DIR, 'frame_%04d.jpg')}"`
   );
 
   const files = fs.readdirSync(FRAMES_DIR).filter((f) => f.endsWith('.jpg')).sort();

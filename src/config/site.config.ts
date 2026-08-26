@@ -27,7 +27,7 @@ export const siteConfig: SiteConfig = {
   tagline: 'Цифровые вселенные под ключ',
   scrollHeight: '700vh',
   totalFrames: 151,
-  coreLoopVideo: '/core-loop.mp4',
+  coreLoopVideo: 'core-loop.mp4',
   phases: {
     approach: [0, 0.55],
     unfold: [0.55, 0.82],

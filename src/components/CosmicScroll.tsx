@@ -11,6 +11,8 @@ const {
   brand: BRAND,
 } = siteConfig;
 
+const BASE_URL = import.meta.env.BASE_URL || '/';
+
 const PHASE_APPROACH_END = phases.approach[1];
 const PHASE_UNFOLD_END = phases.unfold[1];
 
@@ -35,7 +37,7 @@ export function CosmicScroll() {
 
       for (let i = 1; i <= TOTAL_FRAMES; i++) {
         const img = new Image();
-        const src = `/frames/frame_${String(i).padStart(4, '0')}.jpg`;
+        const src = `${BASE_URL}frames/frame_${String(i).padStart(4, '0')}.jpg`;
         img.src = src;
         images.push(img);
 
@@ -184,7 +186,7 @@ export function CosmicScroll() {
         {/* Core loop video (phase 3) */}
         <video
           ref={videoRef}
-          src={coreLoopVideo}
+          src={`${BASE_URL}${coreLoopVideo}`}
           loop
           muted
           playsInline

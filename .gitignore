@@ -1,7 +1,5 @@
 node_modules
 dist
-public/frames
-public/core-loop.mp4
 assets/*.mp4
 assets/*.png
 .DS_Store

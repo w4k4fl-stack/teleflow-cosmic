@@ -213,15 +213,6 @@ export function CosmicScroll() {
             </div>
           </div>
 
-          <div className="self-center text-center">
-            <div className="text-cyan-300/80 text-sm md:text-base tracking-[0.3em] uppercase animate-pulse mb-3">
-              {stateRef.current.phase === 'approach' ? 'Приближение к ядру' : 'Раскрытие сферы'}
-            </div>
-            <div className="text-white/50 text-xs md:text-sm tracking-widest uppercase">
-              [ Scroll to enter core ]
-            </div>
-          </div>
-
           <div className="w-full max-w-md self-center">
             <div className="h-px w-full bg-white/10 rounded overflow-hidden">
               <div

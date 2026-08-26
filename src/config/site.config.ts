@@ -25,13 +25,13 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   brand: 'TeleFlow',
   tagline: 'Цифровые вселенные под ключ',
-  scrollHeight: '700vh',
+  scrollHeight: '2000vh',
   totalFrames: 100,
   coreLoopVideo: 'core-loop.mp4',
   phases: {
-    approach: [0, 0.55],
-    unfold: [0.55, 0.82],
-    core: [0.82, 1],
+    approach: [0, 0.35],
+    unfold: [0.35, 0.65],
+    core: [0.65, 1],
   },
   video: {
     fps: 10,

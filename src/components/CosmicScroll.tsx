@@ -10,7 +10,8 @@ const {
   brand: BRAND,
 } = siteConfig;
 
-const BASE_URL = import.meta.env.BASE_URL || '/';
+const PROD_ASSETS_BASE = 'https://raw.githubusercontent.com/w4k4fl-stack/teleflow-cosmic/main/public/';
+const BASE_URL = import.meta.env.PROD ? PROD_ASSETS_BASE : (import.meta.env.BASE_URL || '/');
 
 const PHASE_APPROACH_END = phases.approach[1];
 const PHASE_UNFOLD_END = phases.unfold[1];

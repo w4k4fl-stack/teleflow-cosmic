@@ -107,7 +107,7 @@ async function main() {
 
   const targetFps = Math.min(parsedFps, 15);
   run(
-    `ffmpeg -i "${approachPath}" -vf "fps=${targetFps},scale=960:-1:flags=lanczos" -q:v 4 "${path.join(FRAMES_DIR, 'frame_%04d.jpg')}"`
+    `ffmpeg -i "${approachPath}" -vf "fps=10,scale=1280:-1:flags=lanczos" -q:v 3 "${path.join(FRAMES_DIR, 'frame_%04d.jpg')}"`
   );
 
   const files = fs.readdirSync(FRAMES_DIR).filter((f) => f.endsWith('.jpg')).sort();

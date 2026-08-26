@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { CoreSite } from './CoreSite';
-import { Preloader } from './Preloader';
 import { siteConfig } from '../config/site.config';
 
 const {
@@ -26,6 +25,7 @@ export function CosmicScroll() {
   const [started, setStarted] = useState(false);
   const [coreActive, setCoreActive] = useState(false);
   const [coreProgress, setCoreProgress] = useState(0);
+  const [fadeIn, setFadeIn] = useState(false);
 
   // Load approach frames
   useEffect(() => {
@@ -61,6 +61,14 @@ export function CosmicScroll() {
       cancelled = true;
     };
   }, []);
+
+  // Auto-start once frames are loaded
+  useEffect(() => {
+    if (loaded >= TOTAL_FRAMES && TOTAL_FRAMES > 0 && !started) {
+      setStarted(true);
+      requestAnimationFrame(() => setFadeIn(true));
+    }
+  }, [loaded, started]);
 
   const renderFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
@@ -168,18 +176,12 @@ export function CosmicScroll() {
 
   return (
     <>
-      {!started && (
-        <Preloader
-          total={TOTAL_FRAMES}
-          loaded={loaded}
-          onStart={() => setStarted(true)}
-        />
-      )}
-
       <div ref={containerRef} className="relative w-full" style={{ height: SCROLL_HEIGHT }}>
         <canvas
           ref={canvasRef}
-          className="fixed inset-0 w-full h-full object-cover z-0"
+          className={`fixed inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
+            fadeIn ? 'opacity-100' : 'opacity-0'
+          }`}
           style={{ background: '#03050F' }}
         />
 

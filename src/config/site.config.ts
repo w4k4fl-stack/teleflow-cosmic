@@ -26,7 +26,7 @@ export const siteConfig: SiteConfig = {
   brand: 'TeleFlow',
   tagline: 'Цифровые вселенные под ключ',
   scrollHeight: '700vh',
-  totalFrames: 241,
+  totalFrames: 151,
   coreLoopVideo: '/core-loop.mp4',
   phases: {
     approach: [0, 0.55],
@@ -35,8 +35,8 @@ export const siteConfig: SiteConfig = {
   },
   video: {
     fps: 30,
-    width: 1280,
-    quality: 2,
+    width: 640,
+    quality: 6,
   },
   products: [],
   game: {

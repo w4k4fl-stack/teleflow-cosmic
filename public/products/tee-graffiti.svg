@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect width="200" height="200" fill="#0D0D0D"/>
-  <path d="M75 55 L125 55 L145 75 L145 140 L55 140 L55 75 Z" fill="#1a1a1a" stroke="#39FF14" stroke-width="3"/>
-  <text x="100" y="105" text-anchor="middle" fill="#FF0055" font-family="monospace" font-size="20" transform="rotate(-5 100 105)">TAG</text>
-  <circle cx="70" cy="120" r="5" fill="#FFE600"/>
-  <circle cx="130" cy="120" r="5" fill="#39FF14"/>
-</svg>

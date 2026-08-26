@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <rect width="200" height="200" fill="#0D0D0D"/>
-  <rect x="60" y="70" width="80" height="90" rx="5" fill="#1a1a1a" stroke="#39FF14" stroke-width="3"/>
-  <path d="M80 70 L80 50 Q80 40 90 40 L110 40 Q120 40 120 50 L120 70" fill="none" stroke="#39FF14" stroke-width="3"/>
-  <rect x="75" y="90" width="50" height="40" fill="#39FF14" opacity="0.2"/>
-  <text x="100" y="115" text-anchor="middle" fill="#39FF14" font-family="monospace" font-size="10">SPRAY</text>
-</svg>

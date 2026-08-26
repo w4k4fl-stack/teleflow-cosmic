@@ -35,8 +35,8 @@ export const siteConfig: SiteConfig = {
   },
   video: {
     fps: 30,
-    width: 640,
-    quality: 6,
+    width: 1280,
+    quality: 3,
   },
   products: [],
   game: {

@@ -1,10 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef, useState } from 'react';
 import content from '../data/content.json';
 import { siteConfig } from '../config/site.config';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface CoreSiteProps {
   active: boolean;
@@ -28,45 +24,41 @@ const ICONS: Record<string, string> = {
   send: '🚀',
 };
 
-export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const triggersRef = useRef<ScrollTrigger[]>([]);
+const SECTION_COUNT = 6;
 
-  // Parallax shift driven by scroll progress inside core phase
-  const parallaxY = progress * 100;
+export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [maxOffset, setMaxOffset] = useState(0);
 
   useEffect(() => {
-    if (!active || !containerRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const sections = containerRef.current?.querySelectorAll('.core-section');
-      sections?.forEach((section) => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 80%',
-            end: 'top 40%',
-            scrub: 1,
-            toggleActions: 'play none none reverse',
-          },
-        });
-        tl.fromTo(
-          section,
-          { opacity: 0, y: 60, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, duration: 1 }
-        );
-        if (section instanceof HTMLElement) {
-          triggersRef.current.push(tl.scrollTrigger as ScrollTrigger);
-        }
-      });
-    }, containerRef);
-
-    return () => {
-      triggersRef.current.forEach((st) => st.kill());
-      triggersRef.current = [];
-      ctx.revert();
+    const update = () => {
+      const inner = innerRef.current;
+      if (!inner) return;
+      setMaxOffset(Math.max(0, inner.scrollHeight - window.innerHeight));
     };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
   }, [active]);
+
+  const translateY = -progress * maxOffset;
+
+  // Per-section reveal progress (6 sections evenly distributed across core scroll)
+  const sectionProgress = (idx: number) => {
+    const start = idx / SECTION_COUNT;
+    const end = (idx + 0.6) / SECTION_COUNT;
+    if (progress <= start) return 0;
+    if (progress >= end) return 1;
+    return (progress - start) / (end - start);
+  };
+
+  const sectionStyle = (idx: number) => {
+    const p = sectionProgress(idx);
+    return {
+      opacity: 0.2 + p * 0.8,
+      transform: `translateY(${(1 - p) * 60}px) scale(${0.96 + p * 0.04})`,
+    };
+  };
 
   const handleCta = () => {
     const tg = content.contact.telegram;
@@ -77,8 +69,7 @@ export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
 
   return (
     <div
-      ref={containerRef}
-      className={`fixed inset-0 z-40 overflow-y-auto transition-opacity duration-1000 ${
+      className={`fixed inset-0 z-40 transition-opacity duration-1000 ${
         active ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}
       style={{
@@ -88,17 +79,26 @@ export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
     >
       {/* Ambient core glow */}
       <div
-        className="fixed inset-0 pointer-events-none z-0 transition-transform duration-100"
+        className="fixed inset-0 pointer-events-none z-0"
         style={{
-          transform: `translateY(${parallaxY}px)`,
           background: `radial-gradient(circle at 50% 40%, rgba(46,91,255,0.15) 0%, transparent 50%),
                        radial-gradient(circle at 50% 60%, rgba(139,92,246,0.12) 0%, transparent 45%)`,
         }}
       />
 
-      <div className="relative z-10 min-h-[300vh] px-6 py-24 md:px-16">
+      <div
+        ref={innerRef}
+        className="relative z-10 px-6 py-24 md:px-16 will-change-transform"
+        style={{
+          transform: `translateY(${translateY}px)`,
+          transition: 'transform 0.1s linear',
+        }}
+      >
         {/* Hero */}
-        <section className="core-section min-h-screen flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+        <section
+          className="core-section min-h-screen flex flex-col items-center justify-center text-center max-w-4xl mx-auto"
+          style={{ ...sectionStyle(0), transition: 'opacity 0.3s ease, transform 0.3s ease' }}
+        >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-xs tracking-widest uppercase mb-8">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
             {siteConfig.tagline}
@@ -119,7 +119,10 @@ export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
         </section>
 
         {/* Services */}
-        <section className="core-section py-24 max-w-6xl mx-auto">
+        <section
+          className="core-section py-24 max-w-6xl mx-auto"
+          style={{ ...sectionStyle(1), transition: 'opacity 0.3s ease, transform 0.3s ease' }}
+        >
           <div className="text-center mb-16">
             <span className="text-cyan-400 text-xs tracking-widest uppercase">Услуги</span>
             <h2 className="text-3xl md:text-5xl font-bold text-white mt-4">Что мы запускаем</h2>
@@ -139,7 +142,10 @@ export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
         </section>
 
         {/* Why */}
-        <section className="core-section py-24 max-w-6xl mx-auto">
+        <section
+          className="core-section py-24 max-w-6xl mx-auto"
+          style={{ ...sectionStyle(2), transition: 'opacity 0.3s ease, transform 0.3s ease' }}
+        >
           <div className="text-center mb-16">
             <span className="text-violet-400 text-xs tracking-widest uppercase">Преимущества</span>
             <h2 className="text-3xl md:text-5xl font-bold text-white mt-4">Почему TeleFlow</h2>
@@ -161,7 +167,10 @@ export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
         </section>
 
         {/* Steps */}
-        <section className="core-section py-24 max-w-5xl mx-auto">
+        <section
+          className="core-section py-24 max-w-5xl mx-auto"
+          style={{ ...sectionStyle(3), transition: 'opacity 0.3s ease, transform 0.3s ease' }}
+        >
           <div className="text-center mb-16">
             <span className="text-cyan-400 text-xs tracking-widest uppercase">Как работаем</span>
             <h2 className="text-3xl md:text-5xl font-bold text-white mt-4">Траектория запуска</h2>
@@ -186,7 +195,10 @@ export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
         </section>
 
         {/* Pricing */}
-        <section className="core-section py-24 max-w-6xl mx-auto">
+        <section
+          className="core-section py-24 max-w-6xl mx-auto"
+          style={{ ...sectionStyle(4), transition: 'opacity 0.3s ease, transform 0.3s ease' }}
+        >
           <div className="text-center mb-16">
             <span className="text-violet-400 text-xs tracking-widest uppercase">Тарифы</span>
             <h2 className="text-3xl md:text-5xl font-bold text-white mt-4">Выбери модуль</h2>
@@ -217,7 +229,10 @@ export function CoreSite({ active, progress = 0 }: CoreSiteProps) {
         </section>
 
         {/* Contact / CTA */}
-        <section className="core-section py-32 text-center max-w-3xl mx-auto">
+        <section
+          className="core-section py-32 text-center max-w-3xl mx-auto"
+          style={{ ...sectionStyle(5), transition: 'opacity 0.3s ease, transform 0.3s ease' }}
+        >
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Готовы к запуску?</h2>
           <p className="text-blue-200/70 mb-10">
             Напишите нам в Telegram — обсудим задачу и бесплатно разберём вашу орбиту.
